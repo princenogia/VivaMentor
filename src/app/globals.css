@@ -1902,9 +1902,8 @@ body {
 
 .caption-text {
   flex: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Tutor Page Mobile */

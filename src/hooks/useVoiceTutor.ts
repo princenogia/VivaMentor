@@ -78,16 +78,32 @@ export function useVoiceTutor({
         const isFinal = message.transcriptType === "final";
 
         if (isFinal) {
-          // Add final transcript to messages
-          setMessages((prev) => [
-            ...prev,
-            {
-              role,
-              content: message.transcript as string,
-              timestamp: new Date(),
-              isFinal: true,
-            },
-          ]);
+          // Combine with previous message if same role, otherwise add new message
+          setMessages((prev) => {
+            const lastMessage = prev[prev.length - 1];
+
+            // If last message is from same role, append to it
+            if (lastMessage && lastMessage.role === role) {
+              const updatedMessages = [...prev];
+              updatedMessages[updatedMessages.length - 1] = {
+                ...lastMessage,
+                content: lastMessage.content + " " + message.transcript,
+                timestamp: new Date(),
+              };
+              return updatedMessages;
+            }
+
+            // Otherwise add as new message
+            return [
+              ...prev,
+              {
+                role,
+                content: message.transcript as string,
+                timestamp: new Date(),
+                isFinal: true,
+              },
+            ];
+          });
           setLiveTranscript(null);
         } else {
           // Show partial transcript as live
