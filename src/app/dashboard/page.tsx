@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Navbar from "@/components/Navbar";
@@ -10,12 +10,25 @@ import { SUBJECTS } from "@/lib/vapi";
 export default function DashboardPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     if (!loading && !user) {
       router.push("/login");
     }
   }, [user, loading, router]);
+
+  // Filter subjects based on search query
+  const filteredSubjects = useMemo(() => {
+    if (!searchQuery.trim()) return SUBJECTS;
+    const query = searchQuery.toLowerCase();
+    return SUBJECTS.filter(
+      (subject) =>
+        subject.name.toLowerCase().includes(query) ||
+        subject.description.toLowerCase().includes(query) ||
+        subject.id.toLowerCase().includes(query)
+    );
+  }, [searchQuery]);
 
   if (loading) {
     return (
@@ -71,21 +84,63 @@ export default function DashboardPage() {
           </div>
         </section>
 
-        {/* Subject Grid */}
+        {/* Subject Grid with Search */}
         <section className="subjects-section">
-          <h2>Choose Your Subject</h2>
-          <div className="subjects-grid">
-            {SUBJECTS.map((subject) => (
-              <SubjectCard
-                key={subject.id}
-                id={subject.id}
-                name={subject.name}
-                icon={subject.icon}
-                description={subject.description}
-                color={subject.color}
+          <div className="subjects-header">
+            <h2>Choose Your Subject</h2>
+            <div className="search-box">
+              <svg
+                className="search-icon"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search subjects..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="search-input"
               />
-            ))}
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="search-clear"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
           </div>
+
+          {filteredSubjects.length > 0 ? (
+            <div className="subjects-grid">
+              {filteredSubjects.map((subject) => (
+                <SubjectCard
+                  key={subject.id}
+                  id={subject.id}
+                  name={subject.name}
+                  icon={subject.icon}
+                  description={subject.description}
+                  color={subject.color}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="no-results">
+              <p>No subjects found matching &quot;{searchQuery}&quot;</p>
+              <button onClick={() => setSearchQuery("")} className="reset-btn">
+                Clear search
+              </button>
+            </div>
+          )}
         </section>
 
         {/* Tips Section */}

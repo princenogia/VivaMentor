@@ -86,25 +86,6 @@ export default function VoiceOrb({
           )}
         </div>
       </div>
-
-      {/* Status text */}
-      <div className="absolute -bottom-12 text-center">
-        <p
-          className={`text-sm font-medium ${
-            isConnecting
-              ? "text-yellow-400"
-              : isActive
-              ? "text-green-400"
-              : "text-[var(--color-text-muted)]"
-          }`}
-        >
-          {isConnecting
-            ? "Connecting..."
-            : isActive
-            ? "Listening..."
-            : "Ready to start"}
-        </p>
-      </div>
     </div>
   );
 }

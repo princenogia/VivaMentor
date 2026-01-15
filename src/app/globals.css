@@ -170,18 +170,35 @@
 /* Password Input with Toggle */
 .input-with-icon {
   position: relative;
-  display: flex;
-  align-items: center;
+  width: 100%;
 }
 
 .input-with-icon input {
   width: 100%;
-  padding-right: 40px;
+  height: 40px;
+  padding: 0 40px 0 12px;
+  background: #161616;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.input-with-icon input::placeholder {
+  color: #555;
+}
+
+.input-with-icon input:focus {
+  outline: none;
+  border-color: #444;
 }
 
 .password-toggle {
   position: absolute;
-  right: 10px;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
   background: none;
   border: none;
   padding: 4px;
@@ -641,6 +658,143 @@ body {
   font-weight: 600;
   color: #fff;
   margin-bottom: 20px;
+}
+
+/* Subject Header with Search */
+.subjects-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.subjects-header h2 {
+  margin-bottom: 0;
+}
+
+/* Search Box */
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  max-width: 18px;
+  min-height: 18px;
+  max-height: 18px;
+  color: #666;
+  pointer-events: none;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.search-input {
+  width: 280px;
+  height: 42px;
+  padding: 0 40px 0 40px;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.search-input::placeholder {
+  color: #666;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #0ea5e9;
+  background: #0d0d0d;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+.search-input:focus + .search-icon,
+.search-box:focus-within .search-icon {
+  color: #0ea5e9;
+}
+
+.search-clear {
+  position: absolute;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  background: #333;
+  border: none;
+  border-radius: 50%;
+  color: #888;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.search-clear:hover {
+  background: #444;
+  color: #fff;
+}
+
+/* No Results */
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  background: #0d0d0d;
+  border: 1px solid #1a1a1a;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.no-results p {
+  color: #666;
+  font-size: 15px;
+  margin-bottom: 16px;
+}
+
+.reset-btn {
+  padding: 10px 20px;
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: 50px;
+  color: #0ea5e9;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.reset-btn:hover {
+  background: rgba(14, 165, 233, 0.1);
+  border-color: #0ea5e9;
+}
+
+@media (max-width: 640px) {
+  .subjects-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .search-input {
+    width: 100%;
+  }
 }
 
 .subjects-grid {
@@ -1571,69 +1725,85 @@ body {
   gap: 12px;
 }
 
-/* Minimal Start Button - Pill shape, no background */
+/* Minimal Start Button - Pill shape with enhanced hover */
 .start-btn {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 20px;
-  background: transparent;
-  border: 1px solid #444;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #0ea5e9, #d946ef);
+  border: none;
   border-radius: 50px;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
   color: #fff;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(14, 165, 233, 0.3);
 }
 
 .start-btn:hover {
-  border-color: #0ea5e9;
-  color: #0ea5e9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(14, 165, 233, 0.4);
+}
+
+.start-btn:active {
+  transform: translateY(0);
 }
 
 .start-btn svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
 }
 
-/* Control Buttons - Small pills */
+/* Control Buttons - Enhanced hover effects */
 .control-btn {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background: transparent;
+  background: #1a1a1a;
   border: 1px solid #333;
   color: #888;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
 }
 
 .control-btn:hover {
-  border-color: #555;
-  color: #fff;
+  background: #252525;
+  border-color: #0ea5e9;
+  color: #0ea5e9;
+  transform: scale(1.05);
 }
 
 .control-btn.muted {
+  background: rgba(239, 68, 68, 0.15);
   border-color: rgba(239, 68, 68, 0.5);
   color: #f87171;
 }
 
+.control-btn.muted:hover {
+  background: rgba(239, 68, 68, 0.25);
+  transform: scale(1.05);
+}
+
 .control-btn.end {
+  background: rgba(239, 68, 68, 0.15);
   border-color: rgba(239, 68, 68, 0.5);
   color: #f87171;
 }
 
 .control-btn.end:hover {
-  background: rgba(239, 68, 68, 0.1);
+  background: rgba(239, 68, 68, 0.25);
+  transform: scale(1.05);
 }
 
 .control-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
 }
 
 /* Fixed Bottom Captions Box */
@@ -1706,8 +1876,9 @@ body {
 .caption-line {
   display: flex;
   gap: 8px;
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 14px;
+  line-height: 1.4;
+  padding: 4px 0;
 }
 
 .caption-line.user {
@@ -1719,16 +1890,21 @@ body {
 }
 
 .caption-line.live {
-  opacity: 0.6;
+  opacity: 0.7;
+  font-style: italic;
 }
 
 .caption-role {
   font-weight: 600;
   min-width: 30px;
+  flex-shrink: 0;
 }
 
 .caption-text {
   flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Tutor Page Mobile */
